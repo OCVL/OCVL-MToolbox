@@ -34,7 +34,7 @@ im = double(im);
 %%
 [X, Y]= meshgrid( 1:size(im,2), 1:size(im,1) );
 
-rho = rhostart:rhoSampling: floor(min(size(im))/2)-1;
+rho = rhostart:rhoSampling: (floor(min(size(im))/2)-rhoSampling);
 theta_step = thetaSampling*2*pi/360;
 theta = 0: theta_step: 2*pi-theta_step;
 
