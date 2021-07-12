@@ -31,14 +31,14 @@ numoffiles=length(file_list);
 % This should NOT be used with large numoffiles sizes (large memory
 % footprint)
 filenames=cell(numoffiles,1);
-is_dir=cell(numoffiles,1);
+is_dir=false(numoffiles,1);
 
 for x=1:1:numoffiles
 
     temp=file_list(x,1).name;
     temp_isdir=file_list(x,1).isdir;
     filenames{x}=temp; % -2 offset to correct for . and .. in the beginning
-    is_dir{x}=temp_isdir;
+    is_dir(x)=temp_isdir;
     x=x+1;
 
 end

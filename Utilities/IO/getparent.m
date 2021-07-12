@@ -1,4 +1,5 @@
-function [ parent kids ] = getparent( path, height, returntype)
+function [ parent, kids ] = getparent( path, height, returntype)
+% function [ parent, kids ] = getparent( path, height, returntype)
 % Robert Cooper 08-29-11
 %   This function returns the parents of a path, up to a height designated
 %   by height. It then returns the parent directories in the parent
@@ -21,7 +22,9 @@ end
 if strcmp(returntype,'short')
     indices=regexp(path,filesep);
     
-    if height==0
+    if isempty(indices)
+        parent=path;
+    elseif height==0
         parent=path(indices(end)+1:end );
     elseif (height>0) && (height<length(indices))
         parent=path(indices(end-height)+1:indices(end-(height-1))-1 );
@@ -33,9 +36,9 @@ if strcmp(returntype,'short')
 elseif strcmp(returntype,'full')
     indices=regexp(path,filesep);
     
-    if height==0 % Included for consistency... no idea why you'd want this though.
-        parent=path;
-        kids='';
+    if height==0 || isempty(indices)
+        parent='';
+        kids=path;
     elseif (height>0) && (height<length(indices))
         parent=path(1:indices(end-(height-1))-1 );
         kids=path(indices(end-(height-1))+1:end );
