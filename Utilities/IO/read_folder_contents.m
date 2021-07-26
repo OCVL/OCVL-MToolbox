@@ -1,11 +1,11 @@
-function [ file_list, isdir, numfiles ] = read_folder_contents( root_dir,extension, wildcard )
+function [ file_list, isdir, numfiles ] = read_folder_contents( root_dir, extension, wildcard )
 % function [ file_list, isdir, numfiles ] = READ_FOLDER_CONTENTS( root_dir, extension, wildcard )
 % Robert Cooper 12 - 05 - 09
 % This function extracts all filenames from a folder into a cell array.
 %
 % [ file_list, isdir, numfiles ] = READ_FOLDER_CONTENTS( root_dir )
 %       Returns an Nx1 cell array of character vectors (file_list);
-%       each cell contains the full path to a file in the directory
+%       each cell contains the filename of a file in the directory
 %       specified (root_dir).
 %
 %       'isdir' is a corresponding Nx1 vector that contains boolean values
