@@ -1,4 +1,4 @@
-function [ clipped_coords ] = coordclip( coords , thresholdx, thresholdy, inoutorxor )
+function [ clipped_coords, clipped_inds ] = coordclip( coords , thresholdx, thresholdy, inoutorxor )
 % Robert Cooper, 05-06-11
 %   This function removes all coordinates less than or greater a specific
 %   treshold, in an n-defined polygon around an image. Is blind to image size, and only
@@ -43,13 +43,16 @@ if strcmp(inoutorxor,'i')
     % Ensures that all coordinates are inside the box. - In accordance with
     % notebook decision
     clipped_coords=coords( (coords(:,2)>minYthresh) & (coords(:,2)<maxYthresh) &...
-                        (coords(:,1)>minXthresh) & (coords(:,1)<maxXthresh),:);
-
+                           (coords(:,1)>minXthresh) & (coords(:,1)<maxXthresh),:);
+    clipped_inds=find((coords(:,2)>minYthresh) & (coords(:,2)<maxYthresh) &...
+                      (coords(:,1)>minXthresh) & (coords(:,1)<maxXthresh));
     
 elseif strcmp(inoutorxor,'o')
     
     clipped_coords=coords( (coords(:,2)<minYthresh) | (coords(:,2)>maxYthresh) ...
-                        | (coords(:,1)<minXthresh) | (coords(:,1)>maxXthresh),:);
+                         | (coords(:,1)<minXthresh) | (coords(:,1)>maxXthresh),:);
+    clipped_inds=find((coords(:,2)<minYthresh) | (coords(:,2)>maxYthresh) ...
+                    | (coords(:,1)<minXthresh) | (coords(:,1)>maxXthresh));
 
 elseif strcmp(inoutorxor,'xor')
 
@@ -57,7 +60,8 @@ elseif strcmp(inoutorxor,'xor')
     % notebook decision
     clipped_coords = coords( xor( (coords(:,2)<=minYthresh) | (coords(:,2)>=maxYthresh) , ...
                                (coords(:,1)<=minXthresh) | (coords(:,1)>=maxXthresh) ) ,:);
-
+    clipped_inds=find(xor( (coords(:,2)<=minYthresh) | (coords(:,2)>=maxYthresh) , ...
+                           (coords(:,1)<=minXthresh) | (coords(:,1)>=maxXthresh) ));
     
 elseif strcmp(inoutorxor,'and')
     
@@ -65,7 +69,8 @@ elseif strcmp(inoutorxor,'and')
     % notebook decision
     clipped_coords = coords( ((coords(:,2)<=minYthresh) | (coords(:,2)>=maxYthresh)) & ...
                              ((coords(:,1)<=minXthresh) | (coords(:,1)>=maxXthresh)) ,:);
-    
+    clipped_inds=find(((coords(:,2)<=minYthresh) | (coords(:,2)>=maxYthresh)) & ...
+                      ((coords(:,1)<=minXthresh) | (coords(:,1)>=maxXthresh)));
 end
 
 
